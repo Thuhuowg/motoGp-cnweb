@@ -14,4 +14,12 @@ export class TeamService {
             console.log(error)
         }
     }
+    async getListTeam () {
+        try {
+            return await this.teamRepo.getTeam()
+        } catch (error) {
+            console.log(error)
+            
+        }
+    }
 }
