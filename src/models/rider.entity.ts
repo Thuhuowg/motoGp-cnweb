@@ -33,6 +33,14 @@ export class Rider{
     })
     active:number
 
+    @Column()
+    height: number;
+
+    @Column()
+    weight: string;
+
+    @Column()
+    rider_story: string;
     @CreateDateColumn({
         type: 'timestamp',
         default: new Date()

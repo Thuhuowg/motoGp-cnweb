@@ -4,6 +4,11 @@ import { AppModule } from './app.module';
 import { DbConfig } from './database/index';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    origin: '*', // Thay đổi thành nguồn của bạn
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Nếu cần
+  });
   await app.listen(3000);
   if (module.hot) {
     module.hot.accept();

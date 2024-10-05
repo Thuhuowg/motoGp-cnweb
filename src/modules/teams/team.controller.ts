@@ -32,7 +32,7 @@ export class TeamController {
     }
 
     @HttpCode(HttpStatus.OK)
-    @Get('list-team')
+    @Get('')
     async getTeam (){
 
     try {
