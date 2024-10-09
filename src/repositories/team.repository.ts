@@ -16,7 +16,24 @@ export class TeamRepo {
         return await this.teamRepository.save(team)
     }
     async getTeam():Promise<Team[] | null> {
-        return await this.teamRepository.find();
+        let query = `
+        SELECT 
+    t.*, 
+    ARRAY_AGG(
+        JSON_BUILD_OBJECT(
+            'id', r.id,
+            'first_name', r.first_name,
+            'last_name', r.last_name
+        )
+    ) AS rider_on_team
+FROM 
+    teams t
+LEFT JOIN 
+    riders r ON t.id = r.team_id
+GROUP BY 
+    t.id;
+        `
+        return await this.teamRepository.query(query);
     }
     async getTeamById(id: number): Promise<Team | null> {
         return await this.teamRepository.findOne({where: {id:id}})

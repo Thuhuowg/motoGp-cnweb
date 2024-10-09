@@ -23,12 +23,24 @@ export class RiderRepo {
         }
     }
     async getListRider(search?: string): Promise <Rider[]> {
-        const query =
+        let query =
         `
-        SELECT * FROM user
-      WHERE LOWER(first_name) LIKE LOWER($1) OR LOWER(last_name) LIKE LOWER($1) OR UPPER (rider_code) LIKE UPPER($1)
+        SELECT 
+    r.*, 
+    ARRAY_AGG(CONCAT(r2.first_name, ' ', r2.last_name)) AS team_members
+FROM 
+    riders r
+LEFT JOIN 
+    riders r2 ON r.team_id = r2.team_id AND r.id <> r2.id
+GROUP BY 
+    r.id;
         `
-        const users = await this.riderRepository.query(query, [`%${search}%`]);
+        let sql
+        if(search) {
+            query += `WHERE LOWER(first_name) LIKE LOWER($1) OR LOWER(last_name) LIKE LOWER($1) OR UPPER (rider_code) LIKE UPPER($1)`
+            const users = await this.riderRepository.query(query, [`%${search}%`]);
+        }
+        const users = await this.riderRepository.query(query);
     return users;
     }
     async getRiderByCode (rider_code:string) : Promise <Rider> {
