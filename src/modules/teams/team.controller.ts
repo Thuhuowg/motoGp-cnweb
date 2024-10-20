@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post } from "@nestjs/common";
 import { TeamService } from "./team.service";
 import { CreateTeamDto } from "src/dto/CreateTeamDto";
 
@@ -37,6 +37,36 @@ export class TeamController {
 
     try {
          return  await this.teamService.getListTeam()
+       } catch (error) {
+        throw new HttpException({
+            status: HttpStatus.NOT_FOUND,
+            error: 'Khong tim thay team nao',
+          }, HttpStatus.NOT_FOUND, {
+            cause: error
+          });
+       }
+    }
+    @HttpCode(HttpStatus.OK)
+    @Get('admin')
+    async getTeamAdmin (){
+
+    try {
+         return  await this.teamService.getListTeam()
+       } catch (error) {
+        throw new HttpException({
+            status: HttpStatus.NOT_FOUND,
+            error: 'Khong tim thay team nao',
+          }, HttpStatus.NOT_FOUND, {
+            cause: error
+          });
+       }
+    }
+
+    @HttpCode(HttpStatus.OK)
+    @Get('/:id')
+    async getTeamById (@Param('id') id:number){
+    try {
+         return  await this.teamService.getTeamById(id)
        } catch (error) {
         throw new HttpException({
             status: HttpStatus.NOT_FOUND,

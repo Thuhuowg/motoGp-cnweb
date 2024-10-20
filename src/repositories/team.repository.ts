@@ -18,7 +18,7 @@ export class TeamRepo {
     async getTeam():Promise<Team[] | null> {
         let query = `
         SELECT 
-    t.*, 
+    t.*,
     ARRAY_AGG(
         JSON_BUILD_OBJECT(
             'id', r.id,
@@ -36,7 +36,27 @@ GROUP BY
         return await this.teamRepository.query(query);
     }
     async getTeamById(id: number): Promise<Team | null> {
-        return await this.teamRepository.findOne({where: {id:id}})
+        const query = `
+            SELECT 
+    t.*, 
+    ARRAY_AGG(
+        JSON_BUILD_OBJECT(
+            'id', r.id,
+            'first_name', r.first_name,
+            'last_name', r.last_name
+        )
+    ) AS rider_on_team
+FROM 
+    teams t
+LEFT JOIN 
+    riders r ON t.id = r.team_id
+    where team_id = ${id}
+GROUP BY 
+    t.id;`
+        // return await this.teamRepository.findOne({where: {id:id}})
+        const result = await this.teamRepository.query(query);
+        return result[0]
     }
 
+    
 }

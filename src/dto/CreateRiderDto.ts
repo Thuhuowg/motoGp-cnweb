@@ -24,9 +24,6 @@ export class CreateRiderDto {
     @IsDate()
     date_of_birth
 
-    @IsNumber()
-    championship
-
     @IsNotEmpty()
     @IsString()
     rider_image
@@ -36,7 +33,7 @@ export class CreateRiderDto {
     weight
 
     @IsNotEmpty()
-    height
+    heigth
 
     @IsNotEmpty()
     @IsString()

@@ -1,6 +1,6 @@
-import { Controller, Get, HttpCode, HttpException, HttpStatus } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpException, HttpStatus, UseGuards } from "@nestjs/common";
 import { CalendarService } from "./calendar.service";
-
+import { AuthGuard } from "../auths/auth.guard";
 @Controller('calendar')
 export class CalendarController {
     constructor(
@@ -11,6 +11,7 @@ export class CalendarController {
     @Get('')
     async getTeam (){
     try {
+      console.log(Headers)
          return  await this.calenService.getListCalen()
        } catch (error) {
         throw new HttpException({

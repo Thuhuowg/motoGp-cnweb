@@ -1,12 +1,12 @@
 import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn} from 'typeorm'
 import { v4 as uuidv4 } from 'uuid';
-@Entity('result')
+@Entity('results')
 export class Result {
     @PrimaryGeneratedColumn('uuid')
     id: string = uuidv4();
 
     @Column()
-    rider_id: string = uuidv4();
+    rider_code: string ;
 
     @Column()
     race_id: number;
@@ -15,7 +15,7 @@ export class Result {
     score_race_current: number;
     
     @Column({ type: 'interval' })
-    time: string;
+    duration: string;
 
     @Column({
         type: 'boolean',

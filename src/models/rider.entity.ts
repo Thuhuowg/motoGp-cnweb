@@ -34,7 +34,7 @@ export class Rider{
     active:number
 
     @Column()
-    height: number;
+    heigth: number;
 
     @Column()
     weight: string;

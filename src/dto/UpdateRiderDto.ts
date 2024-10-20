@@ -13,12 +13,9 @@ export class UpdateRiderDto {
     @IsString()
     nationality
 
-    @IsDate()
-    date_of_birth
-
-    @IsNumber()
-    championship
+    @IsString()
+    heigth
 
     @IsString()
-    rider_image
+    weight
 }
